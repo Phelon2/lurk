@@ -1,0 +1,31 @@
+{
+  "name": "lurk",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "bin" : {
+    "lurk" : "./bin/lurk.js"
+  },
+  "keywords": [
+    "c++",
+    "website",
+    "front",
+    "end",
+    "emscripten",
+    "emsdk"
+  ],
+  "author": "Daniel Hood",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^2.2.4"
+  },
+  "dependencies": {
+    "colors": "^1.1.0",
+    "commander": "^2.8.1",
+    "git": "^0.1.5"
+  }
+}
