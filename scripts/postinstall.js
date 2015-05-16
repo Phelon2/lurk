@@ -1,7 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var spawn = require('child_process').spawn;
-var colors = require('colors');
+var print = require('../lib/utility').print;
 var userDoesHaveGit = spawn('which', ['git']);
 var emsdkRepository = 'https://github.com/evhan55/emsdk_portable.git';
 var cloneDir = path.resolve(__dirname, '..', 'emsdk');
@@ -33,7 +33,16 @@ function fail(message) {
 }
 
 function message(message) {
-  console.log('\n' + message.green + '\n' + cliSeperator.yellow);
+  print([
+    '',
+    message
+  ], 'green');
+
+  print([
+    '',
+    cliSeperator,
+    ''
+  ], 'yellow');
 }
 
 function cloneEmsdk() {
