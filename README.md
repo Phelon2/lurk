@@ -1,3 +1,12 @@
+> A build tool for creating cross platform C++ frotn end appliications
+
+## Under Construction
+
+This tool is using other tools that
+have not been released yet. Development
+or use of `lurk` will remain exclusive until
+dependencies are officially released.
+
 ## Requirements
 
 - __CMake__ must be installed
