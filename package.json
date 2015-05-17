@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm test",
+    "test": "mocha",
     "postinstall": "node scripts/postinstall.js"
   },
-  "bin" : {
-    "lurk" : "./bin/lurk.js"
+  "bin": {
+    "lurk": "./bin/lurk.js"
   },
   "keywords": [
     "c++",
@@ -21,6 +21,7 @@
   "author": "Daniel Hood",
   "license": "ISC",
   "devDependencies": {
+    "chai": "^2.3.0",
     "mocha": "^2.2.4"
   },
   "dependencies": {

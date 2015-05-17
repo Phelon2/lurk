@@ -147,6 +147,10 @@ function activateLatest() {
 }
 
 function installIbBuildTool() {
+  if (fs.existsSync(ibDir)) {
+    return;
+  }
+
   message('Cloning ib');
   var cloneIb = spawn('git', ['clone', ibRepo, ibDir], {
     stdio: 'inherit'
