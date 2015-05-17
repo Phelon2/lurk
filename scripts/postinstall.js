@@ -5,7 +5,9 @@ var print = require('../lib/utility').print;
 var userDoesHaveGit = spawn('which', ['git']);
 var emsdkRepository = 'https://github.com/evhan55/emsdk_portable.git';
 var cloneDir = path.resolve(__dirname, '..', 'emsdk');
-var emsdkBin = path.resolve(__dirname, "..", 'emsdk/emsdk');
+var emsdkBin = path.resolve(__dirname, '..', 'emsdk', 'emsdk');
+var ibDir = path.resolve(__dirname, '..', 'ib');
+var ibRepo = 'https://github.com/JasonL9000/dj.git';
 var cliSeperator = '==================================================';
 var gitBin;
 
@@ -138,6 +140,21 @@ function activateLatest() {
   activate.on('close', function (exitCode) {
     if (exitCode !== 0) {
       fail('Activating latest emsdk install failed!');
+    }
+
+    installIbBuildTool();
+  });
+}
+
+function installIbBuildTool() {
+  message('Cloning ib');
+  var cloneIb = spawn('git', ['clone', ibRepo, ibDir], {
+    stdio: 'inherit'
+  });
+
+  cloneIb.on('close', function (exitCode) {
+    if (exitCode !== 0) {
+      fail('Cloning ib build tool failed');
     }
 
     message('Lurk is ready to use');
