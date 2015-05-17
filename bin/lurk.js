@@ -13,6 +13,7 @@ program
   .option('-h, --help', 'output usage information')
   .option('--print_script', 'print makefile to screen before application is built')
   .option('--out', 'lurk build output directory')
+  .option('--src_root', 'lurk source location')
   .option('e, expose', 'sets the emsdk environment variables')
   .option('b, build', 'builds lurk application in current directory')
   .parse(process.argv);
