@@ -8,7 +8,7 @@ var emsdkDir = path.resolve(__dirname, '..', 'emsdk');
 var emcc = path.join(emsdkDir, 'emscripten', 'master', 'emcc');
 var empp = path.join(emsdkDir, 'emscripten', 'master', 'em++');
 var emmake = path.join(emsdkDir, 'emscripten', 'master', 'emmake');
-var ibBin = path.resolve(__dirname, '..', 'ib', 'dj', 'tools', 'ib');
+var ibBin = path.resolve(__dirname, '..', 'ib', 'ib');
 var utility = require('../lib/utility.js');
 
 program

@@ -142,25 +142,6 @@ function activateLatest() {
       fail('Activating latest emsdk install failed!');
     }
 
-    installIbBuildTool();
-  });
-}
-
-function installIbBuildTool() {
-  if (fs.existsSync(ibDir)) {
-    return;
-  }
-
-  message('Cloning ib');
-  var cloneIb = spawn('git', ['clone', ibRepo, ibDir], {
-    stdio: 'inherit'
-  });
-
-  cloneIb.on('close', function (exitCode) {
-    if (exitCode !== 0) {
-      fail('Cloning ib build tool failed');
-    }
-
     message('Lurk is ready to use');
   });
 }

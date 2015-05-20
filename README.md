@@ -1,18 +1,19 @@
-> A build tool for creating cross platform C++ frotn end appliications
+> A build tool for creating C++ applications to run in browsers
 
-## Under Construction
+## Installation
 
-This tool is using other tools that
-have not been released yet. Development
-or use of `lurk` will remain exclusive until
-dependencies are officially released.
+Install using npm (Node Package Manager).
+
+```
+npm intsall -g lurk
+```
 
 ## Requirements
-
-- __CMake__ must be installed
-- _build-essential_ or _xcode_ build tools required
-- GIT must be installed
-- _npm_ and _node_ must be installed
+- __cmake__ - used to install emsdk
+- __compiler__ - build-essential on ubuntu or xcode build tools on osx
+- __git__ - retrieves files required for installation
+- __node__ - nodejs is required to install emscripten
+- __npm__ - the node package manager where lurk lives
 
 ## Development
 
