@@ -5,11 +5,30 @@ var spawn = require('child_process').spawn;
 var program = require('commander');
 var pkg = require(path.resolve(__dirname, '..', 'package.json'));
 var emsdkDir = path.resolve(__dirname, '..', 'emsdk');
-var emcc = path.join(emsdkDir, 'emscripten', 'master', 'emcc');
-var empp = path.join(emsdkDir, 'emscripten', 'master', 'em++');
-var emmake = path.join(emsdkDir, 'emscripten', 'master', 'emmake');
 var ibBin = path.resolve(__dirname, '..', 'ib', 'ib');
 var utility = require('../lib/utility.js');
+
+var reA = /[^a-zA-Z]/g;
+var reN = /[^0-9]/g;
+
+var emscriptenDir = fs.readdirSync(path.join(emsdkDir, 'emscripten')).sort(function (a, b) {
+  var aA = a.replace(reA, "");
+  var bA = b.replace(reA, "");
+  if(aA === bA) {
+      var aN = parseInt(a.replace(reN, ""), 10);
+      var bN = parseInt(b.replace(reN, ""), 10);
+      return aN === bN ? 0 : aN > bN ? 1 : -1;
+  } else {
+      return aA > bA ? 1 : -1;
+  }
+}).filter(function (item) {
+  return !isNaN(item.substring(0, 1));
+}).pop();
+
+emscriptenDir = path.join(emsdkDir, 'emscripten', emscriptenDir);
+var emcc = path.join(emscriptenDir, 'emcc');
+var empp = path.join(emscriptenDir, 'em++');
+var emmake = path.join(emscriptenDir, 'emmake');
 
 program
   .version(pkg.version)
