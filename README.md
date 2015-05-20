@@ -1,4 +1,4 @@
-> A build tool for creating C++ applications to run in browsers
+> Build your web app with C++
 
 ## Installation
 
