@@ -21,6 +21,7 @@
   "author": "Daniel Hood",
   "license": "ISC",
   "devDependencies": {
+    "bluebird": "^2.9.25",
     "chai": "^2.3.0",
     "mocha": "^2.2.4"
   },
