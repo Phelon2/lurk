@@ -25,11 +25,6 @@ var emscriptenDir = fs.readdirSync(path.join(emsdkDir, 'emscripten')).sort(funct
   return !isNaN(item.substring(0, 1));
 }).pop();
 
-emscriptenDir = path.join(emsdkDir, 'emscripten', emscriptenDir);
-var emcc = path.join(emscriptenDir, 'emcc');
-var empp = path.join(emscriptenDir, 'em++');
-var emmake = path.join(emscriptenDir, 'emmake');
-
 program
   .version(pkg.version)
   .option('e, expose', 'view the emsdk environment variables')
@@ -74,12 +69,20 @@ if (program.expose) {
   ], 'yellow');
 }
 
-if (program.build) {
-  // add config object
-  // environment variables
-  process.env.emcc = emcc;
-  process.env.empp = empp;
-  process.env.emmake = emmake;
+// first we get the emscripten config
+utility.readEmscriptenConfig().then(function (cfg) {
+  emscriptenDir = path.join(emsdkDir, 'emscripten', emscriptenDir);
+  process.env.emcc = path.join(cfg.EMSCRIPTEN_ROOT, 'emcc');
+  process.env.empp = path.join(cfg.EMSCRIPTEN_ROOT, 'em++');
+  process.env.emmake = path.join(cfg.EMSCRIPTEN_ROOT, 'emmake');
+
+  if (program.build) {
+    build();
+  }
+});
+
+
+function build() {
   var srcRoot = program.src_root || process.cwd();
 
   function failPackageJson() {
