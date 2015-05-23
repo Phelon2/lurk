@@ -1,29 +1,12 @@
 #!/usr/bin/env node
 var fs = require('fs');
 var path = require('path');
-var spawn = require('child_process').spawn;
+var spawn = require('../lib/utility').spawn;
 var program = require('commander');
 var pkg = require(path.resolve(__dirname, '..', 'package.json'));
 var emsdkDir = path.resolve(__dirname, '..', 'emsdk');
 var ibBin = path.resolve(__dirname, '..', 'ib', 'ib');
 var utility = require('../lib/utility.js');
-
-var reA = /[^a-zA-Z]/g;
-var reN = /[^0-9]/g;
-
-var emscriptenDir = fs.readdirSync(path.join(emsdkDir, 'emscripten')).sort(function (a, b) {
-  var aA = a.replace(reA, "");
-  var bA = b.replace(reA, "");
-  if(aA === bA) {
-      var aN = parseInt(a.replace(reN, ""), 10);
-      var bN = parseInt(b.replace(reN, ""), 10);
-      return aN === bN ? 0 : aN > bN ? 1 : -1;
-  } else {
-      return aA > bA ? 1 : -1;
-  }
-}).filter(function (item) {
-  return !isNaN(item.substring(0, 1));
-}).pop();
 
 program
   .version(pkg.version)
@@ -71,10 +54,15 @@ if (program.expose) {
 
 // first we get the emscripten config
 utility.readEmscriptenConfig().then(function (cfg) {
-  emscriptenDir = path.join(emsdkDir, 'emscripten', emscriptenDir);
-  process.env.emcc = path.join(cfg.EMSCRIPTEN_ROOT, 'emcc');
-  process.env.empp = path.join(cfg.EMSCRIPTEN_ROOT, 'em++');
-  process.env.emmake = path.join(cfg.EMSCRIPTEN_ROOT, 'emmake');
+  if (process.platform === 'win32') {
+    process.env.emcc = 'emcc';
+    process.env.empp = 'em++';
+    process.env.emmake = 'emmake';
+  } else {
+    process.env.emcc = path.join(cfg.EMSCRIPTEN_ROOT, 'emcc');
+    process.env.empp = path.join(cfg.EMSCRIPTEN_ROOT, 'em++');
+    process.env.emmake = path.join(cfg.EMSCRIPTEN_ROOT, 'emmake');
+  }
 
   if (program.build) {
     build();
@@ -134,6 +122,7 @@ function build() {
   }
 
   var args = [
+    ibBin,
     '--cfg',
     program.cfg || 'common',
     '--src_root',
@@ -149,7 +138,7 @@ function build() {
   });
 
   // spawn build process
-  var build = spawn(ibBin, args, {
+  var build = spawn('python', args, {
     stdio: 'inherit'
   });
 

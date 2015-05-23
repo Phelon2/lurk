@@ -1,13 +1,13 @@
 #pragma once
 #include <string>
 
-class Person {
+class Animal {
 public:
   std::string name;
   int age;
   bool male;
 
-  Person(
+  Animal(
     std::string name,
     int age,
     bool male

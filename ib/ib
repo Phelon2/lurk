@@ -12,7 +12,7 @@
 # limitations under the License.
 
 
-import argparse, ast, os, subprocess, tempfile, textwrap
+import argparse, ast, os, subprocess, tempfile, textwrap, platform
 
 
 class IbError(Exception): pass
@@ -46,7 +46,10 @@ class Rule(object):
     for output in outputs:
       dirname = os.path.dirname(output)
       if dirname:
-        self.AppendToRecipe([ 'mkdir', '-p', dirname ])
+        if os.name == 'nt':
+          self.AppendToRecipe([ 'if', 'not', 'exist', dirname, 'mkdir', dirname ])
+        else:
+          self.AppendToRecipe([ 'mkdir', '-p', dirname ])
 
   @property
   def script(self):
@@ -453,11 +456,19 @@ class Planner(object):
 
   def GetHdrs(self, abspath):
     hdrs = self.cached_hdrs.get(abspath)
+
     if hdrs is None:
       args = self.GetCcArgs() + self.cfg.cc.hdrs_flags + [ abspath ]
+      if platform.system() == 'Windows':
+        args = [os.environ['comspec'], '/c'] + args
       output = subprocess.check_output(args)
-      output = output.split(':', 1)[1]
-      output = output.replace('\\', ' ')
+
+      line_split = output.splitlines()
+      for i in range(len(line_split)):
+        line_split[i] = os.path.normpath(line_split[i])
+
+      line_split[0] = line_split[0].split(':', 1)[1]
+      output = '\n'.join(line_split)
       hdrs = []
       for line in output.split():
         spec = self.TryConvAbspathToSpec(line.strip())
@@ -502,10 +513,11 @@ class Planner(object):
       f.write(script)
       name = f.name
     try:
-      return subprocess.call(
-          [ self.cfg.make.tool ] + self.cfg.make.flags +
-          ([ self.cfg.make.force_flag] if force else []) +
-          [ '-f' + name, self.cfg.make.all_pseudo_target ]) == 0
+      theArgs = [ self.cfg.make.tool ] + self.cfg.make.flags + ([ self.cfg.make.force_flag] if force else []) + [ '-f' + name, self.cfg.make.all_pseudo_target ]
+      if platform.system() == 'Windows':
+        theArgs = [os.environ['comspec'], '/c'] + theArgs
+      ret = subprocess.call(theArgs)
+      return ret == 0
     finally:
       os.unlink(name)
 
@@ -663,12 +675,16 @@ LABEL_FILE = '__ib__'
 def main():
   def GetArgs():
     src_root = os.getcwd()
-    while src_root != '/':
-      if os.path.exists(os.path.join(src_root, LABEL_FILE)):
-        break
-      src_root = os.path.dirname(src_root)
-    else:
-      src_root = ''
+
+    # todo : figure out a cleaver
+    # way to make this work on windows
+    #while src_root != '/':
+    #  print src_root
+    #  if os.path.exists(os.path.join(src_root, LABEL_FILE)):
+    #    break
+    #  src_root = os.path.dirname(src_root)
+    #else:
+    #  src_root = ''
     out_root = '../out'
     cfg_root = '.'
     cfg = 'debug'
@@ -759,7 +775,12 @@ def main():
     for wave_number, wave in enumerate(planner.YieldWaves(specs), start=1):
       script = planner.ConvWaveToScript(wave)
       if args.print_script:
+        print """"
+          WE ARE ENDING A WAVE WITH THIS SCRIPT
+          =====================================
+        """
         print '# wave %d\n%s' % (wave_number, script)
+        print "***********************************END"
       if not args.no_run and not planner.RunScript(script, force=args.force):
         break
     return 0

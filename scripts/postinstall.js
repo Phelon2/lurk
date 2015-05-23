@@ -1,7 +1,8 @@
 var fs = require('fs');
 var path = require('path');
-var spawn = require('child_process').spawn;
-var print = require('../lib/utility').print;
+var utility = require('../lib/utility');
+var spawn = utility.spawn;
+var print = utility.print;
 var emsdkRepository = 'https://github.com/evhan55/emsdk_portable.git';
 var cloneDir = path.resolve(__dirname, '..', 'emsdk');
 var emsdkBin = path.resolve(__dirname, '..', 'emsdk', 'emsdk');
@@ -10,19 +11,30 @@ var ibRepo = 'https://github.com/JasonL9000/dj.git';
 var cliSeperator = '==================================================';
 var gitBin;
 
-var userDoesHaveGit = spawn('which', ['git']);
+if (process.platform === 'win32') {
+  // emsdk must be installed
+  emsdkBin = 'emsdk';
+  var userDoesHaveEmsdk = spawn('emsdk', ['help']);
 
-userDoesHaveGit.stdout.on('data', function (data) {
-  gitBin = data.toString();
-});
+  userDoesHaveEmsdk.on('close', function (exitCode) {
+    if (exitCode !== 0) {
+      fail('Emsdk must be installed to use this software');
+    }
 
-userDoesHaveGit.on('close', function (exitCode) {
-  if (exitCode !== 0 && gitBin) {
-    fail('You must have git installed to install this tool');
-  }
+    updateEmsdk();
+  });
+} else {
+  // git must be installed
+  var userDoesHaveGit = spawn('git', ['--version']);
 
-  cloneEmsdk();
-});
+  userDoesHaveGit.on('close', function (exitCode) {
+    if (exitCode !== 0 && gitBin) {
+      fail('Git must be installed to use this software');
+    }
+
+    cloneEmsdk();
+  });
+}
 
 function fail(message) {
   console.log("Need to stop installation... Please check above errors".red);
