@@ -2,7 +2,6 @@ var fs = require('fs');
 var path = require('path');
 var spawn = require('child_process').spawn;
 var print = require('../lib/utility').print;
-var userDoesHaveGit = spawn('which', ['git']);
 var emsdkRepository = 'https://github.com/evhan55/emsdk_portable.git';
 var cloneDir = path.resolve(__dirname, '..', 'emsdk');
 var emsdkBin = path.resolve(__dirname, '..', 'emsdk', 'emsdk');
@@ -10,6 +9,8 @@ var ibDir = path.resolve(__dirname, '..', 'ib');
 var ibRepo = 'https://github.com/JasonL9000/dj.git';
 var cliSeperator = '==================================================';
 var gitBin;
+
+var userDoesHaveGit = spawn('which', ['git']);
 
 userDoesHaveGit.stdout.on('data', function (data) {
   gitBin = data.toString();

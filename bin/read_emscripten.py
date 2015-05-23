@@ -1,5 +1,5 @@
 import os
-execfile(os.environ['HOME'] + '/.emscripten');
+execfile(os.path.expanduser("~") + '/.emscripten');
 
 print '''
   {
