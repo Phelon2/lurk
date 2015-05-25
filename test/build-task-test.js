@@ -53,7 +53,7 @@ describe('BuildTask hello-world', function () {
     expect(task.getIbArguments()).to.deep.eql([
       BuildTask.IB_BIN,
       '--cfg',
-      'common',
+      BuildTask.CONFIG_DEFAULT,
       '--src_root',
       helloWorldDir,
       '--out_root',
@@ -62,23 +62,39 @@ describe('BuildTask hello-world', function () {
     ]);
   });
 
-  it('builds the hello world app', function (done) {
-    // build can take some time
-    this.timeout(1000000);
-
-    utility.deleteFolderRecursive(helloWorldOut);
-
+  it('gets the source root', function () {
     var task = new BuildTask({
       src_root: helloWorldDir
     });
 
-    task.run().then(function () {
-      utility.deleteFolderRecursive(helloWorldOut);
-      done();
-    }).catch(function (err) {
-      console.log(err);
-      console.log(err.stack);
-      throw new Error('build failed');
-    });
+    expect(task.getSrcRoot()).to.eql(helloWorldDir);
   });
+
+  it('gets the config', function () {
+    var task = new BuildTask({
+      src_root: helloWorldDir
+    });
+
+    expect(task.getConfig()).to.eql('common');
+  });
+
+  // it('builds the hello world app', function (done) {
+  //   // build can take some time
+  //   this.timeout(1000000);
+
+  //   utility.deleteFolderRecursive(helloWorldOut);
+
+  //   var task = new BuildTask({
+  //     src_root: helloWorldDir
+  //   });
+
+  //   task.run().then(function () {
+  //     utility.deleteFolderRecursive(helloWorldOut);
+  //     done();
+  //   }).catch(function (err) {
+  //     console.log(err);
+  //     console.log(err.stack);
+  //     throw new Error('build failed');
+  //   });
+  // });
 });
