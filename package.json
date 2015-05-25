@@ -21,13 +21,15 @@
   "author": "Daniel Hood",
   "license": "ISC",
   "devDependencies": {
-    "bluebird": "^2.9.25",
     "chai": "^2.3.0",
     "mocha": "^2.2.4"
   },
   "dependencies": {
+    "async": "^1.0.0",
+    "bluebird": "^2.9.25",
     "colors": "^1.1.0",
     "commander": "^2.8.1",
-    "git": "^0.1.5"
+    "git": "^0.1.5",
+    "prompt": "^0.2.14"
   }
 }

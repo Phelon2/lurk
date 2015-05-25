@@ -5,10 +5,12 @@ var pkg = require(path.resolve(__dirname, '..', 'package.json'));
 var emsdkDir = path.resolve(__dirname, '..', 'emsdk');
 var utility = require('../lib/utility');
 var BuildTask = require('../lib/tasks/build');
+var InitTask = require('../lib/tasks/init');
 
 program
   .version(pkg.version)
   .option('e, expose', 'view the emsdk environment variables')
+  .option('i, init', 'generate a starter application')
   .option('b, build [target]', 'builds specified target')
   .option('-s, --src_root <path>', 'lurk source location for lurk build')
   .option('-o, --out_root <path>', 'lurk output location for lurk build')
@@ -42,6 +44,18 @@ if (program.expose) {
   }).catch(function () {
     utility.print([
       '', 'Build Failed', ''
+    ], 'red');
+  });
+} else if (program.init) {
+  var initTask = new InitTask(program);
+
+  initTask.run().then(function () {
+    utility.print([
+      '', 'Init Succeeded', ''
+    ], 'green');
+  }).catch(function () {
+    utility.print([
+      '', 'Init Failed', ''
     ], 'red');
   });
 }
