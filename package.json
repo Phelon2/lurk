@@ -1,7 +1,15 @@
 {
   "name": "lurk",
   "version": "1.0.0",
-  "description": "",
+  "description": "Build web applications with C++",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/hooddanielc/lurk.git"
+  },
+  "bugs": {
+    "url" : "https://github.com/hooddanielc/lurk/issues",
+    "email" : "hood.danielc@gmail.com"
+  },
   "main": "index.js",
   "scripts": {
     "test": "mocha",
@@ -16,7 +24,13 @@
     "front",
     "end",
     "emscripten",
-    "emsdk"
+    "emsdk",
+    "tool",
+    "build",
+    "build-tool",
+    "code-gen",
+    "boiler",
+    "plate"
   ],
   "author": "Daniel Hood",
   "license": "ISC",
@@ -29,7 +43,6 @@
     "bluebird": "^2.9.25",
     "colors": "^1.1.0",
     "commander": "^2.8.1",
-    "git": "^0.1.5",
     "prompt": "^0.2.14"
   }
 }
