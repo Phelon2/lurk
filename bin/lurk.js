@@ -137,6 +137,8 @@ function build() {
     return item !== '';
   });
 
+  console.log(args);
+
   // spawn build process
   var build = spawn('python', args, {
     stdio: 'inherit'

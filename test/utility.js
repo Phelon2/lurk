@@ -15,9 +15,7 @@ describe('utility', function () {
   });
 
   it('can spawn a process with args', function (done) {
-    var python = utility.spawn('python', ['--version'], {
-      stdio: 'inherit'
-    });
+    var python = utility.spawn('python', ['--version']);
 
     python.on('close', function (exitCode) {
       expect(exitCode).to.eql(0);
