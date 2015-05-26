@@ -43,6 +43,7 @@
     "bluebird": "^2.9.25",
     "colors": "^1.1.0",
     "commander": "^2.8.1",
+    "handlebars": "^3.0.3",
     "prompt": "^0.2.14"
   }
 }

@@ -77,24 +77,4 @@ describe('BuildTask hello-world', function () {
 
     expect(task.getConfig()).to.eql('common');
   });
-
-  // it('builds the hello world app', function (done) {
-  //   // build can take some time
-  //   this.timeout(1000000);
-
-  //   utility.deleteFolderRecursive(helloWorldOut);
-
-  //   var task = new BuildTask({
-  //     src_root: helloWorldDir
-  //   });
-
-  //   task.run().then(function () {
-  //     utility.deleteFolderRecursive(helloWorldOut);
-  //     done();
-  //   }).catch(function (err) {
-  //     console.log(err);
-  //     console.log(err.stack);
-  //     throw new Error('build failed');
-  //   });
-  // });
 });

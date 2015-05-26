@@ -34,4 +34,36 @@ describe('utility', function () {
       done(err);
     });
   });
+
+  it('extends a class', function () {
+    function BaseClass(obj) {
+      this.obj = obj;
+    }
+
+    BaseClass.prototype = {
+      run: function () {
+        return 'hello from base';
+      },
+
+      overrideThis: function () {
+        return 'not overridden';
+      }
+    }
+
+    expect(utility.setExtendable).to.be.a('function');
+    expect(BaseClass.extend).to.eql(undefined);
+    utility.setExtendable(BaseClass);
+    expect(BaseClass.extend).to.be.a('function');
+
+    var TheClass = BaseClass.extend({
+      overrideThis: function () {
+        return 'overridden';
+      }
+    });
+
+    var theClass = new TheClass('something');
+    expect(theClass.run()).to.eql('hello from base');
+    expect(theClass.overrideThis()).to.eql('not overridden');
+    expect(theClass.obj).to.eql('something');
+  });
 });
