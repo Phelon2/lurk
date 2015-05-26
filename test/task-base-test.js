@@ -22,6 +22,7 @@ describe('Task', function () {
     });
 
     var task = new MyTask('something');
+    expect(task instanceof MyTask).to.eql(true);
     expect(called).to.eql(true);
   });
 

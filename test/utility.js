@@ -1,6 +1,5 @@
 var path = require('path');
 var expect = require('chai').expect;
-var spawn = require('child_process').spawn;
 var utility = require(path.resolve(__dirname, '..', 'lib', 'utility'));
 
 describe('utility', function () {
@@ -21,7 +20,7 @@ describe('utility', function () {
       expect(exitCode).to.eql(0);
       done();
     });
-  })
+  });
 
   it('reads emscripten config', function (done) {
     utility.readEmscriptenConfig().then(function (cfg) {
@@ -48,7 +47,7 @@ describe('utility', function () {
       overrideThis: function () {
         return 'not overridden';
       }
-    }
+    };
 
     expect(utility.setExtendable).to.be.a('function');
     expect(MyBase.extend).to.eql(undefined);

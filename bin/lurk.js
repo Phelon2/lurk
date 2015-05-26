@@ -61,7 +61,7 @@ if (program.expose) {
     var message;
 
     if (error && error.err) {
-      var err = error.err;
+      err = error.err;
     }
 
     if (error instanceof Error) {

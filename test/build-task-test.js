@@ -1,8 +1,8 @@
 var path = require('path');
 var fs = require('fs');
+var os = require('os');
 var expect = require('chai').expect;
 var BuildTask = require('../lib/tasks/build');
-var utility = require('../lib/utility');
 var cwd = process.cwd();
 
 describe('BuildTask hello-world', function () {
@@ -26,7 +26,7 @@ describe('BuildTask hello-world', function () {
   });
 
   it('has a project to build', function () {
-    expect(fs.existsSync(helloWorldDir)).to.be.true;
+    expect(fs.existsSync(helloWorldDir)).to.eql(true);
   });
 
   it('finds the target of the project in package.json', function () {
@@ -76,5 +76,36 @@ describe('BuildTask hello-world', function () {
     });
 
     expect(task.getConfig()).to.eql('common');
+  });
+
+  it('gets the module implementation', function (done) {
+    var task = new BuildTask({
+      src_root: helloWorldDir
+    });
+
+    task.getModuleImplementationSrc().then(function (src) {
+      expect(src).to.be.a('string');
+      done();
+    }).catch(function (err) {
+      done(err);
+    });
+  });
+
+  it('prepends file', function (done) {
+    var task = new BuildTask({
+      src_root: helloWorldDir
+    });
+
+    var tmpFile = path.join(os.tmpdir(), 'tmp.txt');
+    fs.writeFileSync(tmpFile, 'bleh');
+
+    task.prependFile(tmpFile, 'bleh-').then(function () {
+      expect(fs.readFileSync(tmpFile).toString()).to.eql('bleh-bleh');
+      done();
+    }).catch(function (err) {
+      done(err);
+    }).finally(function () {
+      fs.unlinkSync(tmpFile);
+    });
   });
 });

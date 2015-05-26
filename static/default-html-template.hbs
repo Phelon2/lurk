@@ -26,12 +26,11 @@
           }
         </style>
       {{/if}}
-
-      {{#if javascriptTarget}}
-        <script type="text/javascript" src="{{javascriptTarget}}"></script>
-      {{/if}}
   </head>
   <body>
     <canvas id="canvas"></canvas>
+    {{#if javascriptTarget}}
+    <script type="text/javascript" src="{{javascriptTarget}}"></script>
+    {{/if}}
   </body>
 </html>

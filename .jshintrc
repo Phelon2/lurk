@@ -1,0 +1,15 @@
+{
+  "undef": true,
+  "unused": true,
+  "node": true,
+  "eqeqeq": true,
+  "quotmark": "single",
+  "predef": [
+    "describe",
+    "beforeEach",
+    "afterEach",
+    "before",
+    "after",
+    "it"
+  ]
+}

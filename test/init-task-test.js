@@ -1,5 +1,4 @@
 var fs = require('fs');
-var path = require('path');
 var expect = require('chai').expect;
 var InitTask = require('../lib/tasks/init');
 
