@@ -2,13 +2,13 @@
   "name": "lurk",
   "version": "1.0.1",
   "description": "Build web applications with C++",
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/hooddanielc/lurk.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hooddanielc/lurk.git"
   },
   "bugs": {
-    "url" : "https://github.com/hooddanielc/lurk/issues",
-    "email" : "hood.danielc@gmail.com"
+    "url": "https://github.com/hooddanielc/lurk/issues",
+    "email": "hood.danielc@gmail.com"
   },
   "main": "index.js",
   "scripts": {

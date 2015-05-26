@@ -17,7 +17,8 @@ __View Help__
 ```
 lurk --help
 ```
-__Init A starter Project__
+
+__Generate a starter project__
 
 ```
 mkdir hello-lurk

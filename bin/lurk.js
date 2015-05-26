@@ -51,11 +51,32 @@ if (program.expose) {
 
   initTask.run().then(function () {
     utility.print([
-      '', 'Init Succeeded', ''
+      '',
+      'Init succeeded',
+      'Project created in ' + initTask.projectDir,
+      ''
     ], 'green');
-  }).catch(function () {
+  }).catch(function (error) {
+    var err;
+    var message;
+
+    if (error && error.err) {
+      var err = error.err;
+    }
+
+    if (error instanceof Error) {
+      message = !err ? 'Unknown' : err.message;
+    } else {
+      if (error.message) {
+        message = error.message;
+      }
+    }
+
     utility.print([
-      '', 'Init Failed', ''
+      '',
+      'Init failed',
+      message,
+      ''
     ], 'red');
   });
 }
