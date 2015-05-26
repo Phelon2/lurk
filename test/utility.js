@@ -36,11 +36,11 @@ describe('utility', function () {
   });
 
   it('extends a class', function () {
-    function BaseClass(obj) {
+    function MyBase(obj) {
       this.obj = obj;
     }
 
-    BaseClass.prototype = {
+    MyBase.prototype = {
       run: function () {
         return 'hello from base';
       },
@@ -51,11 +51,11 @@ describe('utility', function () {
     }
 
     expect(utility.setExtendable).to.be.a('function');
-    expect(BaseClass.extend).to.eql(undefined);
-    utility.setExtendable(BaseClass);
-    expect(BaseClass.extend).to.be.a('function');
+    expect(MyBase.extend).to.eql(undefined);
+    utility.setExtendable(MyBase);
+    expect(MyBase.extend).to.be.a('function');
 
-    var TheClass = BaseClass.extend({
+    var TheClass = MyBase.extend({
       overrideThis: function () {
         return 'overridden';
       }
@@ -63,7 +63,7 @@ describe('utility', function () {
 
     var theClass = new TheClass('something');
     expect(theClass.run()).to.eql('hello from base');
-    expect(theClass.overrideThis()).to.eql('not overridden');
+    expect(theClass.overrideThis()).to.eql('overridden');
     expect(theClass.obj).to.eql('something');
   });
 });
