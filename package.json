@@ -1,6 +1,6 @@
 {
   "name": "lurk",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Build web applications with C++",
   "repository": {
     "type": "git",
